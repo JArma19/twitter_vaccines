@@ -30,26 +30,27 @@ def main():
 
     dates = weeks.get_weeks_list()
 
-    for i in range(0, 1):#len(dates)):
+    for i in range(0, len(dates)):
 
         #Lettura da MongoDB 
         df = mongo_coll_metriche.read_df_week(i)
         print(df.shape)
 
         #Aggiornamento grafo
-        j = 0
-        for row in df.itertuples():
-            print(j)
-            j+=1
+        
+        for row in df.itertuples():            
             print(row.user_id, row.classe)
             tiger_conn.tg_connection.upsertVertex("User", row.user_id, {"classe" : row.classe})
         
         #Leggo i link
         df_links = tiger_conn.get_links(dates[i])
         df_links["week"] = i
+        df_links = df_links.astype("int")
 
         #Salvo nella collezione links
+        print("Salvataggio in mongoDB nella collection links...")
         mongo_coll_links.save_df(df_links)
+        print("Salvataggio completato")
 
         del df
         del df_links

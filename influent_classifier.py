@@ -65,7 +65,7 @@ def main():
         # Salvataggio in mongoDB
         df_complete["week"] = i #Aggiungo la settimana per poter poi interrogare per settimana e recuperare il df in seguito
 
-        print("Salvataggio in mongoDB...")
+        print("Salvataggio in mongoDB nella collection metriche...")
         mongo_coll.save_df(df_complete)
         print("Salvataggio completato")
 

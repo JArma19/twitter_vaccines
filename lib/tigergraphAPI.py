@@ -124,7 +124,7 @@ class tigergraph_connection:
 
             CREATE DISTRIBUTED QUERY get_links(DATETIME _start, DATETIME _end) FOR GRAPH twitter SYNTAX v2{ 
         
-            SELECT u1 as influente, u2 as non_influente INTO T
+            SELECT u1 as user, u2 as page INTO T
             FROM User:u1 -(TWEETED>:r1)- Tweet:t -(<RETWEETED)- User:u2
             WHERE t.created_at > _start AND t.created_at <= _end AND u1.classe == "INFLUENTE" and u2.classe == "NON_INFLUENTE";
                 
